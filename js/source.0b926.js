@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -92,7 +92,7 @@
 
 
 if (true) {
-  module.exports = __webpack_require__(9);
+  module.exports = __webpack_require__(10);
 } else {}
 
 
@@ -333,6 +333,40 @@ module.exports = emptyFunction;
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (false) {}
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (true) {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(11);
+} else {}
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
@@ -4844,13 +4878,13 @@ module.exports = emptyFunction;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(29)(module)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(6)) :
+    true ? factory(__webpack_require__(7)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -5029,7 +5063,7 @@ module.exports = emptyFunction;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5037,7 +5071,7 @@ module.exports = emptyFunction;
 
 var _react = _interopRequireDefault(__webpack_require__(0));
 
-var _reactDom = _interopRequireDefault(__webpack_require__(10));
+var _reactDom = _interopRequireDefault(__webpack_require__(6));
 
 __webpack_require__(18);
 
@@ -5051,7 +5085,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom.default.render(_react.default.createElement(_App.default, null), document.getElementById('app'));
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5077,40 +5111,6 @@ var X={Children:{map:function(a,b,e){if(null==a)return a;var c=[];W(a,c,null,b,e
 _calculateChangedBits:b,_defaultValue:a,_currentValue:a,_currentValue2:a,_changedBits:0,_changedBits2:0,Provider:null,Consumer:null};a.Provider={$$typeof:y,_context:a};return a.Consumer=a},forwardRef:function(a){return{$$typeof:B,render:a}},Fragment:v,StrictMode:w,unstable_AsyncMode:A,unstable_Profiler:x,createElement:M,cloneElement:function(a,b,e){null===a||void 0===a?D("267",a):void 0;var c=void 0,d=k({},a.props),g=a.key,h=a.ref,f=a._owner;if(null!=b){void 0!==b.ref&&(h=b.ref,f=J.current);void 0!==
 b.key&&(g=""+b.key);var l=void 0;a.type&&a.type.defaultProps&&(l=a.type.defaultProps);for(c in b)K.call(b,c)&&!L.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==l?l[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){l=Array(c);for(var m=0;m<c;m++)l[m]=arguments[m+2];d.children=l}return{$$typeof:t,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=M.bind(null,a);b.type=a;return b},isValidElement:N,version:"16.4.1",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:J,
 assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default?Z.default:Z;
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (false) {}
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (true) {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(11);
-} else {}
 
 
 /***/ }),
@@ -5636,7 +5636,7 @@ var _Feed = _interopRequireDefault(__webpack_require__(21));
 
 var _withProfiler = __webpack_require__(1);
 
-var _lisa = _interopRequireDefault(__webpack_require__(35));
+var _lisa = _interopRequireDefault(__webpack_require__(41));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5682,20 +5682,49 @@ var _Composer = _interopRequireDefault(__webpack_require__(25));
 
 var _Post = _interopRequireDefault(__webpack_require__(28));
 
-var _stylesM = _interopRequireDefault(__webpack_require__(33));
+var _Spinner = _interopRequireDefault(__webpack_require__(36));
+
+var _stylesM = _interopRequireDefault(__webpack_require__(39));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-// Core
-// Components
-// Instruments
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 class Feed extends _react.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "state", {
+      posts: [{
+        id: '123',
+        comment: 'Hi there!',
+        created: 1526825076849
+      }, {
+        id: '456',
+        comment: 'Приветик! 👋🏻',
+        created: 1526825076855
+      }]
+    });
+  }
+
   render() {
+    const {
+      posts
+    } = this.state;
+    const postsJSX = posts.map(post => {
+      return _react.default.createElement(_Post.default, _extends({
+        key: post.id
+      }, post));
+    });
     return _react.default.createElement("section", {
       className: _stylesM.default.feed
-    }, _react.default.createElement(_StatusBar.default, null), _react.default.createElement(_Composer.default, null), _react.default.createElement(_Post.default, null));
+    }, _react.default.createElement(_Spinner.default, {
+      isSpinning: true
+    }), _react.default.createElement(_StatusBar.default, null), _react.default.createElement(_Composer.default, null), postsJSX);
   }
 
 }
@@ -5813,31 +5842,41 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(__webpack_require__(0));
 
-var _moment = _interopRequireDefault(__webpack_require__(6));
+var _moment = _interopRequireDefault(__webpack_require__(7));
+
+var _propTypes = _interopRequireDefault(__webpack_require__(31));
 
 var _withProfiler = __webpack_require__(1);
 
-var _stylesM = _interopRequireDefault(__webpack_require__(31));
+var _stylesM = _interopRequireDefault(__webpack_require__(34));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-// Core
-// Components
-// Instruments
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 class Post extends _react.Component {
   render() {
+    const {
+      comment,
+      created
+    } = this.props;
     return _react.default.createElement(_withProfiler.Consumer, null, context => _react.default.createElement("section", {
       className: _stylesM.default.post
     }, _react.default.createElement("img", {
       src: context.avatar
-    }), _react.default.createElement("a", null, `${context.currentUserFirstName} ${context.currentUserLastName}`), _react.default.createElement("time", null, (0, _moment.default)().format('MMMM D h:mm:ss a')), _react.default.createElement("p", null, "Howdy!")));
+    }), _react.default.createElement("a", null, `${context.currentUserFirstName} ${context.currentUserLastName}`), _react.default.createElement("time", null, _moment.default.unix(created).format('MMMM D h:mm:ss a')), _react.default.createElement("p", null, comment)));
   }
 
 }
 
 exports.default = Post;
+
+_defineProperty(Post, "propTypes", {
+  comment: _propTypes.default.string.isRequired,
+  created: _propTypes.default.number.isRequired
+});
 
 /***/ }),
 /* 29 */
@@ -5872,8 +5911,8 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./ru": 7,
-	"./ru.js": 7
+	"./ru": 8,
+	"./ru.js": 8
 };
 
 
@@ -5901,24 +5940,175 @@ webpackContext.id = 30;
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (false) { var throwOnDirectAccess, isValidElement, REACT_ELEMENT_TYPE; } else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(32)();
+}
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = __webpack_require__(33);
+
+function emptyFunction() {}
+
+module.exports = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret) {
+      // It is still safe when called from React.
+      return;
+    }
+    var err = new Error(
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+    err.name = 'Invariant Violation';
+    throw err;
+  };
+  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  };
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim,
+    exact: getShim
+  };
+
+  ReactPropTypes.checkPropTypes = emptyFunction;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // extracted by mini-css-extract-plugin
 module.exports = {"cross":"styles-m__cross---14-kS","post":"styles-m__post---14CVE"};
 
 /***/ }),
-/* 32 */,
-/* 33 */
+/* 35 */,
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(__webpack_require__(0));
+
+var _reactDom = __webpack_require__(6);
+
+var _stylesM = _interopRequireDefault(__webpack_require__(37));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+// Core
+// Instruments
+const portal = document.getElementById('spinner');
+
+class Spinner extends _react.Component {
+  render() {
+    const {
+      isSpinning
+    } = this.props;
+    return (0, _reactDom.createPortal)(isSpinning ? _react.default.createElement("div", {
+      className: _stylesM.default.spinner
+    }) : null, portal);
+  }
+
+}
+
+exports.default = Spinner;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+module.exports = {"spinner":"styles-m__spinner---17Tpp"};
+
+/***/ }),
+/* 38 */,
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
 module.exports = {"feed":"styles-m__feed---rnD6c","postInEnd":"styles-m__postInEnd---2_Vd_","postInStart":"styles-m__postInStart---1tBuJ","postOutEnd":"styles-m__postOutEnd---2sGMJ","postOutStart":"styles-m__postOutStart---23qTP"};
 
 /***/ }),
-/* 34 */,
-/* 35 */
+/* 40 */,
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/lisa.c0366.png";
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=source.19422.js.map
+//# sourceMappingURL=source.0b926.js.map
