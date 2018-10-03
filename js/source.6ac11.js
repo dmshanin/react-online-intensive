@@ -5707,13 +5707,15 @@ class Feed extends _react.Component {
         id: '456',
         comment: 'Приветик! 👋🏻',
         created: 1526825076855
-      }]
+      }],
+      isSpinning: false
     });
   }
 
   render() {
     const {
-      posts
+      posts,
+      isSpinning
     } = this.state;
     const postsJSX = posts.map(post => {
       return _react.default.createElement(_Post.default, _extends({
@@ -5723,7 +5725,7 @@ class Feed extends _react.Component {
     return _react.default.createElement("section", {
       className: _stylesM.default.feed
     }, _react.default.createElement(_Spinner.default, {
-      isSpinning: true
+      isSpinning: isSpinning
     }), _react.default.createElement(_StatusBar.default, null), _react.default.createElement(_Composer.default, null), postsJSX);
   }
 
@@ -6111,4 +6113,4 @@ module.exports = __webpack_require__.p + "images/lisa.c0366.png";
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=source.0b926.js.map
+//# sourceMappingURL=source.6ac11.js.map
