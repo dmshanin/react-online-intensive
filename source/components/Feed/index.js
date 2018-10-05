@@ -19,6 +19,7 @@ export default class Feed extends Component {
         this._createPost = this._createPost.bind(this);
         this._setPostsFetchingState = this._setPostsFetchingState.bind(this);
         this._likePost = this._likePost.bind(this);
+        this._deletePost = this._deletePost.bind(this);
     }
 
     state = {
@@ -51,7 +52,7 @@ export default class Feed extends Component {
 
         const post = {
             id:      getUniqueID(),
-            created: moment.now(),
+            created: moment.utc(),
             comment,
             likes:   [],
         };
@@ -62,6 +63,23 @@ export default class Feed extends Component {
             posts:           [post, ...posts],
             isPostsFetching: false,
         }));
+    }
+
+    async _deletePost (id) {
+        this._setPostsFetchingState(true);
+
+        await delay(1200);
+
+        const newPosts = this.state.posts;
+
+        const index = newPosts.findIndex((item) => item.id === id);
+
+        newPosts.splice(index, 1);
+
+        this.setState({
+            posts:           newPosts,
+            isPostsFetching: false,
+        });
     }
 
     async _likePost (id) {
@@ -88,6 +106,8 @@ export default class Feed extends Component {
             return post;
         });
 
+        console.log(newPosts);
+
         this.setState({
             posts:           newPosts,
             isPostsFetching: false,
@@ -97,7 +117,14 @@ export default class Feed extends Component {
     render () {
         const { posts, isPostsFetching } = this.state;
 
-        const postsJSX = posts.map((post) => <Post key = { post.id } { ...post } _likePost = { this._likePost } />);
+        const postsJSX = posts.map((post) => {
+            return (<Post
+                key = { post.id }
+                { ...post }
+                _deletePost = { this._deletePost }
+                _likePost = { this._likePost }
+            />);
+        });
 
         return (
             <section className = { Styles.feed }>
