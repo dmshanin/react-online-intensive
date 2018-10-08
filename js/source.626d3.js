@@ -106,17 +106,31 @@ if (true) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Consumer = exports.Provider = void 0;
+exports.withProfile = exports.Consumer = exports.Provider = void 0;
 
-var _react = __webpack_require__(0);
+var _react = _interopRequireWildcard(__webpack_require__(0));
 
-// Core
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 const {
   Provider,
   Consumer
 } = (0, _react.createContext)();
 exports.Consumer = Consumer;
 exports.Provider = Provider;
+
+const withProfile = Enhanceable => {
+  return class WithProfile extends _react.Component {
+    render() {
+      return _react.default.createElement(Consumer, null, context => _react.default.createElement(Enhanceable, _extends({}, context, this.props)));
+    }
+
+  };
+};
+
+exports.withProfile = withProfile;
 
 /***/ }),
 /* 2 */
@@ -5652,7 +5666,7 @@ var _react = _interopRequireWildcard(__webpack_require__(0));
 
 var _Feed = _interopRequireDefault(__webpack_require__(22));
 
-var _withProfiler = __webpack_require__(1);
+var _withProfile = __webpack_require__(1);
 
 var _lisa = _interopRequireDefault(__webpack_require__(46));
 
@@ -5671,9 +5685,9 @@ const options = {
 
 class App extends _react.Component {
   render() {
-    return _react.default.createElement(_withProfiler.Provider, {
+    return _react.default.createElement(_withProfile.Provider, {
       value: options
-    }, _react.default.createElement(_Feed.default, options));
+    }, _react.default.createElement(_Feed.default, null));
   }
 
 }
@@ -5696,6 +5710,8 @@ var _react = _interopRequireWildcard(__webpack_require__(0));
 
 var _moment = _interopRequireDefault(__webpack_require__(2));
 
+var _withProfile = __webpack_require__(1);
+
 var _StatusBar = _interopRequireDefault(__webpack_require__(25));
 
 var _Composer = _interopRequireDefault(__webpack_require__(28));
@@ -5708,6 +5724,8 @@ var _stylesM = _interopRequireDefault(__webpack_require__(43));
 
 var _instruments = __webpack_require__(45);
 
+var _class2;
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -5718,9 +5736,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-class Feed extends _react.Component {
-  constructor() {
-    super();
+let Feed = (0, _withProfile.withProfile)(_class2 = class Feed extends _react.Component {
+  constructor(...args) {
+    super(...args);
 
     _defineProperty(this, "state", {
       posts: [{
@@ -5737,75 +5755,68 @@ class Feed extends _react.Component {
       isPostsFetching: false
     });
 
-    this._createPost = this._createPost.bind(this);
-    this._setPostsFetchingState = this._setPostsFetchingState.bind(this);
-    this._likePost = this._likePost.bind(this);
-    this._deletePost = this._deletePost.bind(this);
-  }
-
-  _setPostsFetchingState(state) {
-    this.setState({
-      isPostsFetching: state
+    _defineProperty(this, "_setPostsFetchingState", state => {
+      this.setState({
+        isPostsFetching: state
+      });
     });
-  }
 
-  async _createPost(comment) {
-    this._setPostsFetchingState(true);
+    _defineProperty(this, "_createPost", async comment => {
+      this._setPostsFetchingState(true);
 
-    const post = {
-      id: (0, _instruments.getUniqueID)(),
-      created: _moment.default.utc(),
-      comment,
-      likes: []
-    };
-    await (0, _instruments.delay)(1200);
-    this.setState(({
-      posts
-    }) => ({
-      posts: [post, ...posts],
-      isPostsFetching: false
-    }));
-  }
-
-  async _deletePost(id) {
-    this._setPostsFetchingState(true);
-
-    await (0, _instruments.delay)(1200);
-    const newPosts = this.state.posts;
-    const index = newPosts.findIndex(item => item.id === id);
-    newPosts.splice(index, 1);
-    this.setState({
-      posts: newPosts,
-      isPostsFetching: false
+      const post = {
+        id: (0, _instruments.getUniqueID)(),
+        created: _moment.default.utc(),
+        comment,
+        likes: []
+      };
+      await (0, _instruments.delay)(1200);
+      this.setState(({
+        posts
+      }) => ({
+        posts: [post, ...posts],
+        isPostsFetching: false
+      }));
     });
-  }
 
-  async _likePost(id) {
-    const {
-      currentUserFirstName,
-      currentUserLastName
-    } = this.props;
+    _defineProperty(this, "_likePost", async id => {
+      const {
+        currentUserFirstName,
+        currentUserLastName
+      } = this.props;
 
-    this._setPostsFetchingState(true);
+      this._setPostsFetchingState(true);
 
-    await (0, _instruments.delay)(1200);
-    const newPosts = this.state.posts.map(post => {
-      if (post.id === id) {
-        return _objectSpread({}, post, {
-          likes: [{
-            id: (0, _instruments.getUniqueID)(),
-            firstName: currentUserFirstName,
-            lastName: currentUserLastName
-          }]
-        });
-      }
+      await (0, _instruments.delay)(1200);
+      const newPosts = this.state.posts.map(post => {
+        if (post.id === id) {
+          return _objectSpread({}, post, {
+            likes: [{
+              id: (0, _instruments.getUniqueID)(),
+              firstName: currentUserFirstName,
+              lastName: currentUserLastName
+            }]
+          });
+        }
 
-      return post;
+        return post;
+      });
+      this.setState({
+        posts: newPosts,
+        isPostsFetching: false
+      });
     });
-    console.log(newPosts);
-    this.setState({
-      posts: newPosts,
-      isPostsFetching: false
+
+    _defineProperty(this, "_removePost", async id => {
+      this._setPostsFetchingState(true);
+
+      await (0, _instruments.delay)(1200);
+      this.setState(({
+        posts
+      }) => ({
+        posts: posts.filter(post => post.id !== id),
+        isPostsFetching: false
+      }));
     });
   }
 
@@ -5818,8 +5829,8 @@ class Feed extends _react.Component {
       return _react.default.createElement(_Post.default, _extends({
         key: post.id
       }, post, {
-        _deletePost: this._deletePost,
-        _likePost: this._likePost
+        _likePost: this._likePost,
+        _removePost: this._removePost
       }));
     });
     return _react.default.createElement("section", {
@@ -5831,7 +5842,7 @@ class Feed extends _react.Component {
     }), postsJSX);
   }
 
-}
+}) || _class2;
 
 exports.default = Feed;
 
@@ -5907,27 +5918,31 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(__webpack_require__(0));
 
-var _withProfiler = __webpack_require__(1);
+var _withProfile = __webpack_require__(1);
 
 var _stylesM = _interopRequireDefault(__webpack_require__(26));
+
+var _class;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-// Core
-// Components
-// Instruments
-class StatusBar extends _react.Component {
+let StatusBar = (0, _withProfile.withProfile)(_class = class StatusBar extends _react.Component {
   render() {
-    return _react.default.createElement(_withProfiler.Consumer, null, context => _react.default.createElement("section", {
+    const {
+      avatar,
+      currentUserFirstName,
+      currentUserLastName
+    } = this.props;
+    return _react.default.createElement("section", {
       className: _stylesM.default.statusBar
     }, _react.default.createElement("button", null, _react.default.createElement("img", {
-      src: context.avatar
-    }), _react.default.createElement("span", null, context.currentUserFirstName), "\xA0", _react.default.createElement("span", null, context.currentUserLastName))));
+      src: avatar
+    }), _react.default.createElement("span", null, currentUserFirstName), "\xA0", _react.default.createElement("span", null, currentUserLastName)));
   }
 
-}
+}) || _class;
 
 exports.default = StatusBar;
 
@@ -5955,9 +5970,11 @@ var _react = _interopRequireWildcard(__webpack_require__(0));
 
 var _propTypes = _interopRequireDefault(__webpack_require__(3));
 
-var _withProfiler = __webpack_require__(1);
+var _withProfile = __webpack_require__(1);
 
 var _stylesM = _interopRequireDefault(__webpack_require__(31));
+
+var _class, _temp, _class2;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5965,86 +5982,82 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-class Composer extends _react.Component {
-  constructor() {
-    super();
+let Composer = (_temp = _class = (0, _withProfile.withProfile)(_class2 = class Composer extends _react.Component {
+  constructor(...args) {
+    super(...args);
 
     _defineProperty(this, "state", {
       comment: ''
     });
 
-    this._updateComment = this._updateComment.bind(this);
-    this._submitComment = this._submitComment.bind(this);
-    this._handleFormSubmit = this._handleFormSubmit.bind(this);
-    this._submitOnEnter = this._submitOnEnter.bind(this);
-  }
-
-  _updateComment(event) {
-    this.setState({
-      comment: event.target.value
+    _defineProperty(this, "_updateComment", event => {
+      this.setState({
+        comment: event.target.value
+      });
     });
-  }
 
-  _handleFormSubmit(event) {
-    event.preventDefault();
-
-    this._submitComment();
-  }
-
-  _submitComment() {
-    const {
-      comment
-    } = this.state;
-
-    if (!comment) {
-      return null;
-    }
-
-    this.props._createPost(comment);
-
-    this.setState({
-      comment: ''
-    });
-  }
-
-  _submitOnEnter(event) {
-    const enterKey = event.key === 'Enter';
-
-    if (enterKey) {
+    _defineProperty(this, "_handleFormSubmit", event => {
       event.preventDefault();
 
       this._submitComment();
-    }
+    });
+
+    _defineProperty(this, "_submitComment", () => {
+      const {
+        comment
+      } = this.state;
+
+      if (!comment) {
+        return null;
+      }
+
+      this.props._createPost(comment);
+
+      this.setState({
+        comment: ''
+      });
+    });
+
+    _defineProperty(this, "_submitOnEnter", event => {
+      const enterKey = event.key === 'Enter';
+
+      if (enterKey) {
+        event.preventDefault();
+
+        this._submitComment();
+      }
+    });
   }
 
   render() {
     const {
       comment
     } = this.state;
-    return _react.default.createElement(_withProfiler.Consumer, null, context => _react.default.createElement("section", {
+    const {
+      avatar,
+      currentUserFirstName
+    } = this.props;
+    return _react.default.createElement("section", {
       className: _stylesM.default.composer
     }, _react.default.createElement("img", {
-      src: context.avatar
+      src: avatar
     }), _react.default.createElement("form", {
       onSubmit: this._handleFormSubmit
     }, _react.default.createElement("textarea", {
-      placeholder: `What's on your mind, ${context.currentUserFirstName}?`,
+      placeholder: `What's on your mind, ${currentUserFirstName}?`,
       value: comment,
       onChange: this._updateComment,
       onKeyPress: this._submitOnEnter
     }), _react.default.createElement("input", {
       type: "submit",
       value: "Post"
-    }))));
+    })));
   }
 
-}
-
-exports.default = Composer;
-
-_defineProperty(Composer, "propTypes", {
+}) || _class2, _defineProperty(_class, "propTypes", {
   _createPost: _propTypes.default.func.isRequired
-});
+}), _temp);
+exports.default = Composer;
 
 /***/ }),
 /* 29 */
@@ -6159,31 +6172,30 @@ var _propTypes = __webpack_require__(3);
 
 var _Like = _interopRequireDefault(__webpack_require__(34));
 
-var _withProfiler = __webpack_require__(1);
+var _withProfile = __webpack_require__(1);
 
 var _stylesM = _interopRequireDefault(__webpack_require__(38));
+
+var _class, _temp, _class2;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-class Post extends _react.Component {
-  constructor() {
-    super();
-    this._deletePost = this._deletePost.bind(this);
-  }
+let Post = (_temp = _class = (0, _withProfile.withProfile)(_class2 = class Post extends _react.Component {
+  constructor(...args) {
+    super(...args);
 
-  _deletePost() {
-    const {
-      _deletePost,
-      id
-    } = this.props;
+    _defineProperty(this, "_removePost", () => {
+      const {
+        _removePost,
+        id
+      } = this.props;
 
-    _deletePost(id);
+      _removePost(id);
+    });
   }
 
   render() {
@@ -6192,34 +6204,34 @@ class Post extends _react.Component {
       created,
       _likePost,
       id,
-      likes
+      likes,
+      avatar,
+      currentUserFirstName,
+      currentUserLastName
     } = this.props;
-    return _react.default.createElement(_withProfiler.Consumer, null, context => _react.default.createElement("section", {
+    return _react.default.createElement("section", {
       className: _stylesM.default.post
     }, _react.default.createElement("span", {
       className: _stylesM.default.cross,
-      onClick: this._deletePost
+      onClick: this._removePost
     }), _react.default.createElement("img", {
-      src: context.avatar
-    }), _react.default.createElement("a", null, `${context.currentUserFirstName} ${context.currentUserLastName}`), _react.default.createElement("time", null, _moment.default.unix(created).format('MMMM D h:mm:ss a')), _react.default.createElement("p", null, comment), _react.default.createElement(_Like.default, _extends({
+      src: avatar
+    }), _react.default.createElement("a", null, `${currentUserFirstName} ${currentUserLastName}`), _react.default.createElement("time", null, _moment.default.unix(created).format('MMMM D h:mm:ss a')), _react.default.createElement("p", null, comment), _react.default.createElement(_Like.default, {
       _likePost: _likePost,
       id: id,
       likes: likes
-    }, context))));
+    }));
   }
 
-}
-
-exports.default = Post;
-
-_defineProperty(Post, "propTypes", {
-  _deletePost: _propTypes.func.isRequired,
+}) || _class2, _defineProperty(_class, "propTypes", {
   _likePost: _propTypes.func.isRequired,
+  _removePost: _propTypes.func.isRequired,
   comment: _propTypes.string.isRequired,
   created: _propTypes.number.isRequired,
   id: _propTypes.string.isRequired,
   likes: _propTypes.array.isRequired
-});
+}), _temp);
+exports.default = Post;
 
 /***/ }),
 /* 34 */
@@ -6241,107 +6253,103 @@ var _classnames = _interopRequireDefault(__webpack_require__(35));
 
 var _stylesM = _interopRequireDefault(__webpack_require__(36));
 
+var _withProfile = __webpack_require__(1);
+
+var _class, _temp, _class2;
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-class Like extends _react.Component {
-  constructor() {
-    super();
+let Like = (_temp = _class = (0, _withProfile.withProfile)(_class2 = class Like extends _react.Component {
+  constructor(...args) {
+    super(...args);
 
     _defineProperty(this, "state", {
       showLikers: false
     });
 
-    this._getLikedByMe = this._getLikedByMe.bind(this);
-    this._getLikeStyles = this._getLikeStyles.bind(this);
-    this._likePost = this._likePost.bind(this);
-    this._showLikers = this._showLikers.bind(this);
-    this._hideLikers = this._hideLikers.bind(this);
-    this._getLikesList = this._getLikesList.bind(this);
-    this._getLikesDescription = this._getLikesDescription.bind(this);
-  }
-
-  _showLikers() {
-    this.setState({
-      showLikers: true
+    _defineProperty(this, "_showLikers", () => {
+      this.setState({
+        showLikers: true
+      });
     });
-  }
 
-  _hideLikers() {
-    this.setState({
-      showLikers: false
+    _defineProperty(this, "_hideLikers", () => {
+      this.setState({
+        showLikers: false
+      });
     });
-  }
 
-  _likePost() {
-    const {
-      _likePost,
-      id
-    } = this.props;
+    _defineProperty(this, "_likePost", () => {
+      const {
+        _likePost,
+        id
+      } = this.props;
 
-    _likePost(id);
-  }
-
-  _getLikedByMe() {
-    const {
-      currentUserFirstName,
-      currentUserLastName,
-      likes
-    } = this.props;
-    return likes.some(({
-      firstName,
-      lastName
-    }) => {
-      return `${firstName} ${lastName}` === `${currentUserFirstName} ${currentUserLastName}`;
+      _likePost(id);
     });
-  }
 
-  _getLikeStyles() {
-    const likedByMe = this._getLikedByMe();
-
-    return (0, _classnames.default)(_stylesM.default.icon, {
-      [_stylesM.default.liked]: likedByMe
+    _defineProperty(this, "_getLikedByMe", () => {
+      const {
+        currentUserFirstName,
+        currentUserLastName,
+        likes
+      } = this.props;
+      return likes.some(({
+        firstName,
+        lastName
+      }) => {
+        return `${firstName} ${lastName}` === `${currentUserFirstName} ${currentUserLastName}`;
+      });
     });
-  }
 
-  _getLikesList() {
-    const {
-      showLikers
-    } = this.state;
-    const {
-      likes
-    } = this.props;
-    const likesJSX = likes.map(({
-      firstName,
-      lastName,
-      id
-    }) => _react.default.createElement("li", {
-      key: id
-    }, `${firstName} ${lastName}`));
-    return likes.length && showLikers ? _react.default.createElement("ul", null, likesJSX) : null;
-  }
+    _defineProperty(this, "_getLikeStyles", () => {
+      const likedByMe = this._getLikedByMe();
 
-  _getLikesDescription() {
-    const {
-      likes,
-      currentUserLastName,
-      currentUserFirstName
-    } = this.props;
+      return (0, _classnames.default)(_stylesM.default.icon, {
+        [_stylesM.default.liked]: likedByMe
+      });
+    });
 
-    const likedByMe = this._getLikedByMe();
+    _defineProperty(this, "_getLikesList", () => {
+      const {
+        showLikers
+      } = this.state;
+      const {
+        likes
+      } = this.props;
+      const likesJSX = likes.map(({
+        firstName,
+        lastName,
+        id
+      }) => _react.default.createElement("li", {
+        key: id
+      }, `${firstName} ${lastName}`));
+      return likes.length && showLikers ? _react.default.createElement("ul", null, likesJSX) : null;
+    });
 
-    if (likes.length === 1 && likedByMe) {
-      return `${currentUserFirstName} ${currentUserLastName}`;
-    } else if (likes.length === 2 && likedByMe) {
-      return `You and ${likes.length - 1} other`;
-    } else if (likedByMe) {
-      return `You and ${likes.length - 1} others`;
-    }
+    _defineProperty(this, "_getLikesDescription", () => {
+      const {
+        likes,
+        currentUserLastName,
+        currentUserFirstName
+      } = this.props;
 
-    return likes.length;
+      const likedByMe = this._getLikedByMe();
+
+      if (likes.length === 1 && likedByMe) {
+        return `${currentUserFirstName} ${currentUserLastName}`;
+      } else if (likes.length === 2 && likedByMe) {
+        return `You and ${likes.length - 1} other`;
+      } else if (likedByMe) {
+        return `You and ${likes.length - 1} others`;
+      }
+
+      return likes.length;
+    });
   }
 
   render() {
@@ -6362,11 +6370,7 @@ class Like extends _react.Component {
     }, likesDescription)));
   }
 
-}
-
-exports.default = Like;
-
-_defineProperty(Like, "propTypes", {
+}) || _class2, _defineProperty(_class, "propTypes", {
   _likePost: _propTypes.func.isRequired,
   id: _propTypes.string.isRequired,
   likes: (0, _propTypes.arrayOf)((0, _propTypes.shape)({
@@ -6374,7 +6378,8 @@ _defineProperty(Like, "propTypes", {
     firstName: _propTypes.string.isRequired,
     lastName: _propTypes.string.isRequired
   })).isRequired
-});
+}), _temp);
+exports.default = Like;
 
 /***/ }),
 /* 35 */
@@ -6572,4 +6577,4 @@ module.exports = __webpack_require__.p + "images/lisa.c0366.png";
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=source.86129.js.map
+//# sourceMappingURL=source.626d3.js.map
