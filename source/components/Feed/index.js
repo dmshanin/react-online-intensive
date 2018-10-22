@@ -28,7 +28,7 @@ export default class Feed extends Component {
         const { currentUserFirstName, currentUserLastName } = this.props;
 
         this._fetchPosts();
-        socket.emit('json', GROUP_ID);
+        socket.emit('join', GROUP_ID);
 
         socket.on('create', (postJSON) => {
             const { data: createPost, meta } = JSON.parse(postJSON);
