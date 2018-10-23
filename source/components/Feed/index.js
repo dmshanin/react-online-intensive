@@ -1,6 +1,10 @@
 // Core
 import React, { Component } from 'react';
-import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
+import {
+    Transition,
+    CSSTransition,
+    TransitionGroup
+} from 'react-transition-group';
 import { fromTo } from 'gsap';
 
 // Components
@@ -162,6 +166,24 @@ export default class Feed extends Component {
         );
     };
 
+    _animatePostmanEntered = (composer) => {
+        fromTo(
+            composer,
+            1,
+            { opacity: 1, x: 0 },
+            { opacity: 0, x: 500 }
+        );
+    };
+
+    _animatePostmanEnter = (composer) => {
+        fromTo(
+            composer,
+            1,
+            { opacity: 0, x: 500 },
+            { opacity: 1, x: 0 }
+        );
+    };
+
     render () {
         const { posts, isPostsFetching } = this.state;
 
@@ -201,7 +223,14 @@ export default class Feed extends Component {
                     timeout = { 1000 }>
                     <Composer _createPost = { this._createPost } />
                 </Transition>
-                <Postman />
+                <Transition
+                    appear
+                    in
+                    onEnter = { this._animatePostmanEnter }
+                    onEntered = { this._animatePostmanEntered }
+                    timeout = { 4000 }>
+                    <Postman />
+                </Transition>
                 <TransitionGroup>{postsJSX}</TransitionGroup>
             </section>
         );
