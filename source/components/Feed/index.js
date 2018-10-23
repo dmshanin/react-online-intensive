@@ -171,7 +171,7 @@ export default class Feed extends Component {
         );
     };
 
-    _animatePostmanEntering = (composer) => {
+    _animatePostmanEnter = (composer) => {
         fromTo(
             composer,
             1,
@@ -207,8 +207,8 @@ export default class Feed extends Component {
                 <Transition
                     appear
                     in
+                    onEnter = { this._animatePostmanEnter }
                     onEntered = { this._animatePostmanEntered }
-                    onEntering = { this._animatePostmanEntering }
                     timeout = { 4000 }>
                     <Postman />
                 </Transition>
