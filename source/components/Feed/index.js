@@ -183,17 +183,15 @@ export default class Feed extends Component {
     render () {
         const { posts, isPostsFetching } = this.state;
 
-        const postsJSX = posts.map((post) => {
-            return (
-                <Catcher key = { post.id }>
-                    <Post
-                        { ...post }
-                        _likePost = { this._likePost }
-                        _removePost = { this._removePost }
-                    />
-                </Catcher>
-            );
-        });
+        const postsJSX = posts.map((post) => (
+            <Catcher key = { post.id }>
+                <Post
+                    { ...post }
+                    _likePost = { this._likePost }
+                    _removePost = { this._removePost }
+                />
+            </Catcher>
+        ));
 
         return (
             <section className = { Styles.feed }>
