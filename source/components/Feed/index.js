@@ -1,6 +1,10 @@
 // Core
 import React, { Component } from 'react';
-import { Transition, CSSTransition, TransitionGroup } from 'react-transition-group';
+import {
+    Transition,
+    CSSTransition,
+    TransitionGroup
+} from 'react-transition-group';
 import { fromTo } from 'gsap';
 
 // Components
@@ -11,6 +15,7 @@ import Composer from 'components/Composer';
 import Post from 'components/Post';
 import Spinner from 'components/Spinner';
 import Postman from 'components/Postman';
+import Counter from 'components/Counter';
 
 // Instruments
 import Styles from './styles.m.css';
@@ -201,6 +206,7 @@ export default class Feed extends Component {
                     timeout = { 1000 }>
                     <Composer _createPost = { this._createPost } />
                 </Transition>
+                <Counter count = { postsJSX.length } />
                 <Postman />
                 <TransitionGroup>{postsJSX}</TransitionGroup>
             </section>
