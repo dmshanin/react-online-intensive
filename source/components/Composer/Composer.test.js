@@ -2,6 +2,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Composer } from './';
+import renderer from 'react-test-renderer';
 
 const avatar = '/images/lisa.c0366.png';
 const currentUserFirstName = 'Лиза';
@@ -23,12 +24,17 @@ const updatedState = {
 };
 
 const result = mount(<Composer { ...props } />);
+const renderTree = renderer.create(<Composer { ...props } />).toJSON();
 
 const _submitCommentSpy = jest.spyOn(result.instance(), '_submitComment');
 const _handleFormSubmitSpy = jest.spyOn(result.instance(), '_handleFormSubmit');
 const _submitOnEnterSpy = jest.spyOn(result.instance(), '_submitOnEnter');
 
 describe('Composer component:', () => {
+    test('should correspond to its snapshot counterpart', () => {
+        expect(renderTree).toMatchSnapshot();
+    });
+
     test('should have I «section» element', () => {
         expect(result.find('section')).toHaveLength(1);
     });
