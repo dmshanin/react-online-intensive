@@ -26,6 +26,7 @@ const result = mount(<Composer { ...props } />);
 
 const _submitCommentSpy = jest.spyOn(result.instance(), '_submitComment');
 const _handleFormSubmitSpy = jest.spyOn(result.instance(), '_handleFormSubmit');
+const _submitOnEnterSpy = jest.spyOn(result.instance(), '_submitOnEnter');
 
 describe('Composer component:', () => {
     test('should have I «section» element', () => {
@@ -98,11 +99,18 @@ describe('Composer component:', () => {
         expect(_handleFormSubmitSpy).toHaveBeenCalledTimes(1);
     });
 
-    test('avatar prop should be', () => {
+    test('avatar prop should be avatar', () => {
         expect(props.avatar).toBe(avatar);
     });
 
-    test('currentUserFirstName prop should be', () => {
+    test('currentUserFirstName prop should be currentUserFirstName', () => {
         expect(props.currentUserFirstName).toBe(currentUserFirstName);
+    });
+
+    test('should handle form «submit» event on keypress «Enter»', () => {
+        result.find('textarea').simulate('keypress', { key: 'Enter' });
+
+        expect(result.state()).toEqual(initialState);
+        expect(_submitOnEnterSpy).toHaveBeenCalledTimes(1);
     });
 });
