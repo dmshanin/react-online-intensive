@@ -57,9 +57,6 @@ export class Composer extends Component {
         const { comment } = this.state;
         const { avatar, currentUserFirstName } = this.props;
 
-        console.log(avatar);
-        console.log(currentUserFirstName);
-
         return (
             <section className = { Styles.composer }>
                 <img src = { avatar } />
