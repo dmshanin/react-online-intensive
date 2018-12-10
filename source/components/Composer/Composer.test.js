@@ -119,4 +119,10 @@ describe('Composer component:', () => {
         expect(result.state()).toEqual(initialState);
         expect(_submitOnEnterSpy).toHaveBeenCalledTimes(1);
     });
+
+    test('should handle event on keypress not «Enter»', () => {
+        result.find('textarea').simulate('keypress', { key: 'Space' });
+
+        expect(_submitOnEnterSpy).toThrow();
+    });
 });
