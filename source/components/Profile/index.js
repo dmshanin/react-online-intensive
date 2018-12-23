@@ -9,6 +9,11 @@ import Styles from './styles.m.css';
 
 @withProfile
 export default class Feed extends Component {
+    _handleFormSubmit = (event) => {
+        event.preventDefault();
+        this.props._logout();
+    };
+
     render () {
         const {
             currentUserFirstName,
@@ -22,6 +27,10 @@ export default class Feed extends Component {
                     Welcome, {currentUserFirstName} {currentUserLastName}
                 </h1>
                 <img src = { avatar } />
+
+                <form onSubmit = { this._handleFormSubmit }>
+                    <input type = 'submit' value = 'Logout' />
+                </form>
             </section>
         );
     }
